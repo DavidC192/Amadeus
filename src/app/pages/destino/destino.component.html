@@ -76,13 +76,7 @@
     <section class="opciones--opcion">
       <div class="opcion__encabezado">
         <h2 class="opcion__encabezado__nombre">
-          Aventura en
-          <ng-container
-            *ngIf="europa[0]?.continente === 'Europa'; else showAsia"
-          >
-            Europa
-          </ng-container>
-          <ng-template #showAsia> Asia </ng-template>
+          Aventura en Europa
         </h2>
       </div>
 
