@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DestinoService } from '@services/destino.service';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -14,10 +14,11 @@ export class DestinoComponent {
   constructor(public destinoService: DestinoService) {}
 
   control: boolean = true;
-
   destinos: any[] = [];
   america: any[] = [];
   europa: any[] = [];
+  americaImages: any[] = [];
+  europaImages: any[] = [];
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -39,6 +40,7 @@ export class DestinoComponent {
       .then((response) => {
         this.destinos = response;
         this.filtrarDestinos();
+        this.cargarImagenes();
         console.log(response);
       })
       .catch((error) => {
@@ -54,5 +56,29 @@ export class DestinoComponent {
       (destino) =>
         destino.continente === 'Europa' || destino.continente === 'Asia'
     );
+  }
+
+  cargarImagenes(): void {
+    if (this.america.length > 0) {
+      const destinoAmerica = this.america[0].nombreDestino;
+      this.destinoService.getPixabayImages(destinoAmerica)
+        .then((images) => {
+          this.americaImages = images;
+        })
+        .catch((error) => {
+          console.error('Error fetching America images', error);
+        });
+    }
+
+    if (this.europa.length > 0) {
+      const destinoEuropa = this.europa[0].nombreDestino;
+      this.destinoService.getPixabayImages(destinoEuropa)
+        .then((images) => {
+          this.europaImages = images;
+        })
+        .catch((error) => {
+          console.error('Error fetching Europa images', error);
+        });
+    }
   }
 }

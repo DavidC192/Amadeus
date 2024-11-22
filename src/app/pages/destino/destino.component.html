@@ -27,7 +27,8 @@
 
       <div class="opcion__imagen">
         <img
-          [src]="america[0]?.img"
+          *ngIf="americaImages[0]"
+          [src]="americaImages[0]?.webformatURL"
           alt="Destino en America"
           id="imagenAmerica"
         />
@@ -91,7 +92,12 @@
       </div>
 
       <div class="opcion__imagen">
-        <img [src]="europa[0]?.img" alt="Destino en Europa" id="imagenEuropa" />
+        <img
+          *ngIf="europaImages[0]"
+          [src]="europaImages[0]?.webformatURL"
+          alt="Destino en Europa"
+          id="imagenEuropa"
+        />
         <div class="overlay">
           <div class="text">
             <p>Pais:</p>

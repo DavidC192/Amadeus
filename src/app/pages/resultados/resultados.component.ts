@@ -42,7 +42,7 @@ export class ResultadosComponent {
           },
           destination: this.destinoService.respuestasSer[0].toLocaleLowerCase(),
           weather: this.destinoService.respuestasSer[1].toLocaleLowerCase(),
-          activity: this.destinoService.respuestasSer[2],
+          activity: this.destinoService.respuestasSer[2].toLocaleLowerCase(),
           hosting: this.destinoService.respuestasSer[3].toLocaleLowerCase(),
           age: this.destinoService.respuestasSer[5].toLocaleLowerCase(),
           travel: this.destinoService.respuestasSer[4].toLocaleLowerCase()
