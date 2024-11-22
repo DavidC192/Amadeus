@@ -42,27 +42,22 @@ export class ResultadosComponent {
           },
           destination: this.destinoService.respuestasSer[0].toLocaleLowerCase(),
           weather: this.destinoService.respuestasSer[1].toLocaleLowerCase(),
-          activity: this.destinoService.respuestasSer[2],
+          activity: this.destinoService.respuestasSer[2].toLocaleLowerCase(),
           hosting: this.destinoService.respuestasSer[3].toLocaleLowerCase(),
           age: this.destinoService.respuestasSer[5].toLocaleLowerCase(),
           travel: this.destinoService.respuestasSer[4].toLocaleLowerCase()
        }
     )
       .then((response) => {
-        this.destinoService.destinoA = response.destinoA;
-        this.destinoService.destinoE = response.destinoE;
-        sessionStorage.setItem('destinoAmerica', response.destinoA);
-        sessionStorage.setItem('destinoEuropa', response.destinoE);
+        this.destinoService.destinoA = response.destinationAmerica;
+        this.destinoService.destinoE = response.destinationEuropa;
+        sessionStorage.setItem('destinoAmerica', JSON.stringify(response.destinationAmerica));
+        sessionStorage.setItem('destinoEuropa', JSON.stringify(response.destinationEuropa));
         console.log('Destino A:', this.destinoService.destinoA);
         console.log('Destino E:', this.destinoService.destinoE);
       })
       .catch((error) => {
         console.error('Error al enviar destino:', error);
       });
-
-    if (this.destinoService.destinoA == '') {
-      this.destinoService.destinoA = 'Bora Bora';
-      this.destinoService.destinoE = 'Dubái';
-    }
   }
 }

@@ -69,8 +69,8 @@ export class DestinoService {
   }
 
   indice: number = 0;
-  destinoA: String = '';
-  destinoE: String = '';
+  destinoA: Object = '';
+  destinoE: Object = '';
   respuestasSer: String[] = [];
   nombreS: String = '';
   correoS: String = '';
