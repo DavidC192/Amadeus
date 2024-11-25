@@ -15,15 +15,10 @@ export class ResultadosComponent {
   destinoAmerica = '';
   destinoEuropa = '';
   pDestino = this.destinoService.respuestasSer[0];
-  // pNanInt = "Nacional";
   pClimatica = this.destinoService.respuestasSer[1];
-  // pLluvia = "Clima seco";
   pActividad = this.destinoService.respuestasSer[2];
-  // pGastronomia = "Comida Local";
   pAlojamiento = this.destinoService.respuestasSer[3];
-  // pCentroAfueras = "Centro de la Ciudad";
   dViaje = this.destinoService.respuestasSer[4];
-  // pDescanso = "1-2 días act.intensas";
   edad = this.destinoService.respuestasSer[5];
 
   volverAtras() {
@@ -34,20 +29,18 @@ export class ResultadosComponent {
   enviarDestino() {
     // Llama al método `sendDestinity` del servicio `DestinoService`, enviando un objeto con las respuestas seleccionadas
     this.destinoService
-      .sendDestinity('answer',
-        {
-          userDTO: {
-            name:  this.destinoService.nombreS.toLocaleLowerCase(),
-            email: this.destinoService.correoS.toLocaleLowerCase(),
-          },
-          destination: this.destinoService.respuestasSer[0].toLocaleLowerCase(),
-          weather: this.destinoService.respuestasSer[1].toLocaleLowerCase(),
-          activity: this.destinoService.respuestasSer[2].toLocaleLowerCase(),
-          hosting: this.destinoService.respuestasSer[3].toLocaleLowerCase(),
-          age: this.destinoService.respuestasSer[5].toLocaleLowerCase(),
-          travel: this.destinoService.respuestasSer[4].toLocaleLowerCase()
-       }
-    )
+      .sendDestinity('answer', {
+        userDTO: {
+          name: this.destinoService.nombreS.toLocaleLowerCase(),
+          email: this.destinoService.correoS.toLocaleLowerCase(),
+        },
+        destination: this.destinoService.respuestasSer[0].toLocaleLowerCase(),
+        weather: this.destinoService.respuestasSer[1].toLocaleLowerCase(),
+        activity: this.destinoService.respuestasSer[2].toLocaleLowerCase(),
+        hosting: this.destinoService.respuestasSer[3].toLocaleLowerCase(),
+        age: this.destinoService.respuestasSer[5].toLocaleLowerCase(),
+        travel: this.destinoService.respuestasSer[4].toLocaleLowerCase()
+      })
       .then((response) => {
         this.destinoService.destinoA = response.destinationAmerica;
         this.destinoService.destinoE = response.destinationEuropa;
