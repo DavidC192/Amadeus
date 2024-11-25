@@ -27,7 +27,7 @@
 
       <div class="opcion__imagen">
         <img
-          src="https://www.viajes.cl/hubfs/Torre%20del%20Reloj%20en%20Cartagena%20de%20Indias,%20Colombia.jpg"
+          [src]="destinoService.srcA"
           alt="Destino en America"
           id="imagenAmerica"
         />
@@ -91,7 +91,11 @@
       </div>
 
       <div class="opcion__imagen">
-        <img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/339000/339657-Downtown-Miami.jpg" alt="Destino en Europa" id="imagenEuropa" />
+        <img
+          [src]="destinoService.srcE"
+          alt="Destino en Europa"
+          id="imagenEuropa"
+        />
         <div class="overlay">
           <div class="text">
             <p>Pais:</p>

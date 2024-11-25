@@ -6,6 +6,7 @@ import axios, { AxiosInstance } from 'axios';
 })
 export class DestinoService {
   private axiosClient: AxiosInstance;
+  private pixabayApiKey: string = '47232476-f037f51d74a14bc48e9e96004';
 
   constructor() {
     this.axiosClient = axios.create({
@@ -40,7 +41,7 @@ export class DestinoService {
       console.error('Error', error);
       throw error;
     }
-  }
+  }  
 
   /**
    * Este método realiza una solicitud HTTP GET a un endpoint determinado y devuelve la respuesta del servidor.
@@ -64,6 +65,18 @@ export class DestinoService {
       return response.data;
     } catch (error) {
       console.error('Error', error);
+      throw error;
+    }
+  }
+
+  async getPixabayImages(query: string): Promise<any> {
+    try {
+      const response = await axios.get(
+        `https://pixabay.com/api/?key=${this.pixabayApiKey}&q=${query}&image_type=photo&orientation=horizontal`
+      );
+      return response.data.hits[0].largeImageURL;
+    } catch (error) {
+      console.error('Error fetching images from Pixabay', error);
       throw error;
     }
   }
