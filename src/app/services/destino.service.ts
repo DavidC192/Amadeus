@@ -69,8 +69,20 @@ export class DestinoService {
   }
 
   indice: number = 0;
-  destinoA: Object = '';
-  destinoE: Object = '';
+  destinoA: any = {
+    site: "",
+    country: "",
+    language: "",
+    unmissablePlace: "",
+    typicalFood: ""
+  };
+  destinoE: any = {
+    site: "",
+    country: "",
+    language: "",
+    unmissablePlace: "",
+    typicalFood: ""
+  };
   respuestasSer: String[] = [];
   nombreS: String = '';
   correoS: String = '';

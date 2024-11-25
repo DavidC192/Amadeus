@@ -12,18 +12,24 @@ import { RouterLink } from '@angular/router';
 export class DestinoComponent {
   constructor(public destinoService: DestinoService) {
     setTimeout(() => {
-      this.destinoAmerica.set(JSON.parse(sessionStorage.getItem('destinoAmerica') || '{"site": "", "country": ""}'))
-      this.destinoEuropa.set(JSON.parse(sessionStorage.getItem('destinoEuropa') || '{"site": "", "country": ""}'))
+      this.destinoAmerica.set(JSON.parse(sessionStorage.getItem('destinoAmerica') || '{}'))
+      this.destinoEuropa.set(JSON.parse(sessionStorage.getItem('destinoEuropa') || '{}'))
     }, 500);
   }
 
   destinoAmerica = signal({
     "site": "",
     "country": "",
+    "language": "",
+    "unmissablePlace": "",
+    "typicalFood": ""
   });
   destinoEuropa = signal({
     "site": "",
     "country": "",
+    "language": "",
+    "unmissablePlace": "",
+    "typicalFood": ""
   });
 
   // destinos: any[] = [];
