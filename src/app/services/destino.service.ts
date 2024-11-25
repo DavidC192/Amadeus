@@ -74,7 +74,7 @@ export class DestinoService {
       const response = await axios.get(
         `https://pixabay.com/api/?key=${this.pixabayApiKey}&q=${query}&image_type=photo&orientation=horizontal`
       );
-      return response.data.hits;
+      return response.data.hits[0].largeImageURL;
     } catch (error) {
       console.error('Error fetching images from Pixabay', error);
       throw error;

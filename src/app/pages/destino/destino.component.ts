@@ -10,21 +10,37 @@ import { RouterLink } from '@angular/router';
   styleUrl: './destino.component.css',
 })
 export class DestinoComponent {
+  destinoAmerica = signal({
+    site: "",
+    country: ""
+  });
+
+  destinoEuropa = signal({
+    site: "",
+    country: ""
+  });
+
   constructor(public destinoService: DestinoService) {
     setTimeout(() => {
-      this.destinoAmerica.set(JSON.parse(sessionStorage.getItem('destinoAmerica') || '{"site": "", "country": ""}'))
-      this.destinoEuropa.set(JSON.parse(sessionStorage.getItem('destinoEuropa') || '{"site": "", "country": ""}'))
+      this.destinoAmerica.set(JSON.parse(sessionStorage.getItem('destinoAmerica') || '{"site": "", "country": ""}'));
+      this.destinoEuropa.set(JSON.parse(sessionStorage.getItem('destinoEuropa') || '{"site": "", "country": ""}'));
+      this.loadImages(this.destinoAmerica().site, this.destinoEuropa().site);
     }, 500);
   }
 
-  destinoAmerica = signal({
-    "site": "",
-    "country": "",
-  });
-  destinoEuropa = signal({
-    "site": "",
-    "country": "",
-  });
+  
+
+  async loadImages(destinoAmericaSite: string, destinoEuropaSite: string) {
+    try {
+      const americaImage = await this.destinoService.getPixabayImages(destinoAmericaSite);
+      const europaImage = await this.destinoService.getPixabayImages(destinoEuropaSite);
+      this.destinoService.srcA = americaImage;
+      this.destinoService.srcE = europaImage;
+    } catch (error) {
+      console.error('Error loading images', error);
+    }
+  }
+}
 
   // destinos: any[] = [];
   // america: any[] = [];
@@ -66,4 +82,4 @@ export class DestinoComponent {
   //       destino.continente === 'Europa' || destino.continente === 'Asia'
   //   );
   // }
-}
+
