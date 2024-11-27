@@ -6,7 +6,7 @@ import axios from 'axios';
 })
 export class ReportsService {
 
-  private apiUrl = 'https://671ece1f1dfc4299198329fd.mockapi.io/ListaReporte';
+  private apiUrl = 'https://back-amadeus-grupo-4-production.up.railway.app/answers';
 
   async getReportData(params: any): Promise<any> {
     try {

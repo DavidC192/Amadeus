@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
 import { DestinoService } from '@services/destino.service';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-planes',
@@ -9,16 +9,24 @@ import { RouterLink } from '@angular/router';
   templateUrl: './planes.component.html',
   styleUrl: './planes.component.css'
 })
-export class PlanesComponent {
+export class PlanesComponent implements OnInit {
+  destinoSeleccionado: string | null = null;
+  destino = '';
+  imgDestino = '';
 
-  constructor(public destinoService: DestinoService){}
+  constructor(private route: ActivatedRoute, private destinoService: DestinoService){}
 
-  destino = this.destinoService.destinoA;
-  srcA = this.destinoService.srcA;
-  srcE = this.destinoService.srcE;
+  ngOnInit() {
+    this.destinoSeleccionado = this.route.snapshot.paramMap.get('destino');
 
-  // destino = "Playa del Carmen";
-  // srcA = "../../../assets/img/PlayaDelCarmen.jpg"
+    if (this.destinoSeleccionado === "destinoAmerica") {
+      this.destino = JSON.parse(sessionStorage.getItem('destinoAmerica') || '{}').site
+      this.imgDestino = this.destinoService.srcA
+    }else{
+      this.destino = JSON.parse(sessionStorage.getItem('destinoEuropa') || '{}').site
+      this.imgDestino = this.destinoService.srcE
+    }
+  }
 
 
 
