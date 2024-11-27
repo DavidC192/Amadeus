@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MenuNavegacionComponent } from './pages/menu-navegacion/menu-navegacion.component';
-import { DestinoService } from '@services/destino.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +11,4 @@ import { DestinoService } from '@services/destino.service';
 })
 export class AppComponent {
   title = 'AmadeusAngular';
-
-  
-  constructor(destinoService: DestinoService) {
-    destinoService.getDestinity("answers").then((response) => {console.log(response)})
-
-}
 }

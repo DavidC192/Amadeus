@@ -41,13 +41,13 @@ export class ResultadosComponent {
         age: this.destinoService.respuestasSer[5].toLocaleLowerCase(),
         travel: this.destinoService.respuestasSer[4].toLocaleLowerCase()
       })
-      .then((response) => {
-        this.destinoService.destinoA = response.destinationAmerica;
-        this.destinoService.destinoE = response.destinationEuropa;
-        sessionStorage.setItem('destinoAmerica', JSON.stringify(response.destinationAmerica));
-        sessionStorage.setItem('destinoEuropa', JSON.stringify(response.destinationEuropa));
-        console.log('Destino A:', this.destinoService.destinoA);
-        console.log('Destino E:', this.destinoService.destinoE);
+      .then(async (response) => {
+        this.destinoService.setDestinoA(response.destinationAmerica);
+        this.destinoService.setDestinoE(response.destinationEuropa);
+        const imgAmerica = await this.destinoService.getPixabayImages(response.destinationAmerica.site + ' ' + response.destinationAmerica.country);
+        const imgEuropa = await this.destinoService.getPixabayImages(response.destinationEuropa.site + ' ' + response.destinationEuropa.country);
+        this.destinoService.setImgDestinos({imgAmerica, imgEuropa});
+        this.destinoService.setloading(false);
       })
       .catch((error) => {
         console.error('Error al enviar destino:', error);

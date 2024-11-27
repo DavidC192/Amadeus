@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { DestinoService } from '@services/destino.service';
 import { Router } from '@angular/router';
-import { UsuarioComponent } from '../usuario/usuario.component';
 
 @Component({
   selector: 'app-tarjetas',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './tarjetas.component.html',
   styleUrl: './tarjetas.component.css'
 })

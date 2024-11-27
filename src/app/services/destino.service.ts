@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import axios, { AxiosInstance } from 'axios';
 
 @Injectable({
@@ -8,11 +9,17 @@ export class DestinoService {
   private axiosClient: AxiosInstance;
   private pixabayApiKey: string = '47232476-f037f51d74a14bc48e9e96004';
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:8080/', // URL base para las solicitudes
+      baseURL: 'https://back-amadeus-grupo-4-production.up.railway.app/', // URL base para las solicitudes
       // timeout: 5000,
     });
+
+    setTimeout(() => {
+      if (isPlatformBrowser(this.platformId)) {
+        this.loadDataState();
+      }
+    }, 100);
   }
 
   /**
@@ -73,8 +80,27 @@ export class DestinoService {
     try {
       const response = await axios.get(
         `https://pixabay.com/api/?key=${this.pixabayApiKey}&q=${query}&image_type=photo&orientation=horizontal`
-      );
-      return response.data.hits[0].largeImageURL;
+      )
+      console.log(response.data);
+      
+      if (response.data.totalHits > 0) {
+        for (let i = 0; i < response.data.hits.length; i++) {
+          const imageTags = response.data.hits[i].tags.toLowerCase();
+          if (
+            imageTags.includes("places") ||
+            imageTags.includes("city") ||
+            imageTags.includes("travel") ||
+            imageTags.includes("destination") ||
+            imageTags.includes("nature") ||
+            imageTags.includes("the colosseum") ||
+            imageTags.includes("portals machupicchu")
+          ) {
+            return response.data.hits[i].largeImageURL;
+          }
+        }
+      
+      // return response.data.hits[0].largeImageURL;
+      }
     } catch (error) {
       console.error('Error fetching images from Pixabay', error);
       throw error;
@@ -96,10 +122,76 @@ export class DestinoService {
     unmissablePlace: "",
     typicalFood: ""
   };
+
   respuestasSer: String[] = [];
   nombreS: String = '';
   correoS: String = '';
   avatar: String = 'https://cdn-icons-png.flaticon.com/512/9187/9187532.png';
-  srcA: String = '';
-  srcE: String = '';
+  srcA: any = '';
+  srcE: any = '';
+  isLoading = signal(true);
+
+  getloading() {
+    return this.isLoading();
+  }
+
+  getDestinoA() {
+    return this.destinoA;
+  }
+
+  getDestinoE() {
+    return this.destinoE;
+  }
+
+  getImgDestinos() {
+    return {
+      imgAmerica: this.srcA,
+      imgEuropa: this.srcE
+    };
+  }
+
+  setloading(value: boolean) {
+    this.isLoading.set(value);
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem('isLoading', JSON.stringify(value));
+    }
+  }
+
+  setDestinoA(value: any) {
+    this.destinoA = value;
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem('destinoAmerica', JSON.stringify(value));
+    }
+  }
+
+  setDestinoE(value: any) {
+    this.destinoE = value;
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem('destinoEuropa', JSON.stringify(value));
+    }
+  }
+
+  setImgDestinos(value: any) {
+    this.srcA = value.imgAmerica;
+    this.srcE = value.imgEuropa;
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem('imgDestinos', JSON.stringify(value));
+    }
+  }
+
+  private loadDataState() {
+    if (isPlatformBrowser(this.platformId)) {
+      const loadingState = sessionStorage.getItem('isLoading');
+      const destinoAmericaState = sessionStorage.getItem('destinoAmerica');
+      const destinoEuropaState = sessionStorage.getItem('destinoEuropa');
+      const imgDestinosState = sessionStorage.getItem('imgDestinos') || '';
+      if (loadingState && destinoAmericaState && destinoEuropaState) {
+        this.isLoading.set(JSON.parse(loadingState));
+        this.destinoA = JSON.parse(destinoAmericaState);
+        this.destinoE = JSON.parse(destinoEuropaState);
+        this.srcA = JSON.parse(imgDestinosState).imgAmerica;
+        this.srcE = JSON.parse(imgDestinosState).imgEuropa;
+      }
+    }
+  }
 }

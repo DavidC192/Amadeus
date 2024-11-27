@@ -1,0 +1,23 @@
+<main class="conteiner">
+  <h1 class="conteiner__titulo">Tus Destinos:</h1>
+
+  <div>
+    <h3 class="conteiner__titulo">
+      Tus Gustos son bastante exóticos, te sugerimos los siguientes lugares:
+    </h3>
+  </div>
+
+  <div class="conteiner--opciones">
+    @if (destinoService.getloading()) {
+      <h1>Cargando..</h1>
+    }@else{
+      <app-destino continente="America" [destino]="destinoService.getDestinoA()" [imgDestino]="destinoService.getImgDestinos().imgAmerica"/>
+    }
+
+    @if (destinoService.getloading()) {
+      <h1>Cargando..</h1>
+    }@else{
+      <app-destino continente="Europa" [destino]="destinoService.getDestinoE()" [imgDestino]="destinoService.getImgDestinos().imgEuropa"/>
+    }
+  </div>
+</main>
